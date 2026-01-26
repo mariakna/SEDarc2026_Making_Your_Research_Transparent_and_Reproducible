@@ -1,0 +1,16 @@
+% set working directory
+cd [working directory]
+% clone repository into working directory
+git clone [insert link]
+% navigate to the newly created directory
+cd [new cloned directory]
+% check status
+git status
+% add changes to remote
+git add [whatever appears in status, e.g., README.md]
+% add a comment and commit 
+git commit -m "edited readme"
+% push changes
+git push
+% pull changes
+git pull
