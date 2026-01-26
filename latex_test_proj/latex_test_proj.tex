@@ -1,0 +1,177 @@
+%%%%% settings %%%%%
+
+\documentclass{beamer}
+\mode<presentation>
+\usetheme{Pittsburgh}
+\usecolortheme{beaver}
+\setbeamerfont{date}{size=\footnotesize}
+\setbeamerfont{author}{size=\footnotesize}
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{\fontsize{6}{7}\selectfont%
+    \begin{beamercolorbox}[wd=.266666\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\insertshortauthor%~~(\insertshortinstitute)
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.533333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+      \usebeamerfont{title in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+			\usebeamerfont{date in head/foot}\today\hspace*{1em}
+      \usebeamertemplate{page number in head/foot}\hspace*{2ex}
+    \end{beamercolorbox}
+  }%
+  \vskip0pt%
+}
+
+\definecolor{darkred}{RGB}{189, 26, 26}
+
+\setbeamercolor{itemize item}{fg=darkred}
+\setbeamercolor{itemize subitem}{fg=darkred}
+\setbeamercolor{itemize subsubitem}{fg=darkred}
+
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{itemize subsubitem}[square]
+
+% for enumerate
+\setbeamercolor{item projected}{bg=darkred}
+\setbeamercolor{subitem projected}{bg=darkred}
+\setbeamercolor{subsubitem projected}{bg=darkred}
+
+\usepackage[style=ieee, citestyle = numeric-comp, backend=biber, natbib, sorting = none]{biblatex}
+
+\defbibheading{ref}[References]{%
+    \section*{#1}%
+    \addcontentsline{toc}{section}{#1}%
+    \markboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}}
+		
+\addbibresource{refs.bib}
+
+\usepackage{ifthen,hyperref} % colour coding of references, links and citations
+\hypersetup{
+ colorlinks,
+    linkcolor={green!25!black},
+    citecolor=darkred,
+    urlcolor={blue!70!black}
+}
+\urlstyle{same}
+
+\DeclareFieldFormat{citehyperref}{%
+  \DeclareFieldAlias{bibhyperref}{noformat}% Avoid nested links
+  \bibhyperref{#1}}
+
+\DeclareFieldFormat{textcitehyperref}{%
+  \DeclareFieldAlias{bibhyperref}{noformat}% Avoid nested links
+  \bibhyperref{%
+    #1%
+    \ifbool{cbx:parens}
+      {\bibcloseparen\global\boolfalse{cbx:parens}}
+      {}}}
+
+\savebibmacro{cite}
+\savebibmacro{textcite}
+\savebibmacro{citeauthor}
+
+\renewbibmacro*{cite}{%
+  \printtext[citehyperref]{%
+    \restorebibmacro{cite}%
+    \usebibmacro{cite}}}
+
+\renewbibmacro*{textcite}{%
+  \ifboolexpr{
+    ( not test {\iffieldundef{prenote}} and
+      test {\ifnumequal{\value{citecount}}{1}} )
+    or
+    ( not test {\iffieldundef{postnote}} and
+      test {\ifnumequal{\value{citecount}}{\value{citetotal}}} )
+  }
+    {\DeclareFieldAlias{textcitehyperref}{noformat}}
+    {}%
+  \printtext[textcitehyperref]{%
+    \restorebibmacro{textcite}%
+    \usebibmacro{textcite}}}
+
+\renewbibmacro*{citeauthor}{%
+  \printtext[citeauthorhyperref]{%
+    \restorebibmacro{citeauthor}%
+    \usebibmacro{citeauthor}}}
+
+\usepackage{graphicx}
+\usepackage{graphbox}
+% set path for figures
+\graphicspath{{figs/}}
+
+% remove the word figure from figure captions
+\usepackage[labelformat=empty]{caption}
+\captionsetup{justification=centering}
+
+% control line breaks in table cells
+\usepackage{array, makecell} %
+
+\usepackage{multirow}
+\usepackage{booktabs}
+
+\usepackage{tikz}
+\usetikzlibrary{fit,shapes.geometric}
+
+\usepackage{nth}
+
+\newcounter{nodemarkers}
+\newcommand<>\circletext[1]{%
+    \tikz[overlay,remember picture] 
+    \node (marker-\arabic{nodemarkers}-a) at (0,1.5ex) {};%
+    #1%
+    \tikz[overlay,remember picture]
+    \node (marker-\arabic{nodemarkers}-b) at (0,0){};%
+    \tikz[overlay,remember picture,inner sep=2pt]
+    \node#2[draw,line width=2pt,darkred,circle,fit=(marker-\arabic{nodemarkers}-a.center) (marker-\arabic{nodemarkers}-b.center)] {};%
+    \stepcounter{nodemarkers}%
+}
+
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+  \insertshorttitle\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+
+\title{My first \LaTeX presentation}
+%\subtitle{Subtitle}
+\author[Author et al.]{\textbf{First Author}\inst{1} \and \textbf{Second Author}\inst{2}}
+\institute{\tiny{\inst{1} Department of XYZ, University of XYZ, UK \and %
+																				 \inst{2} Department of NMK, University of NMK, Germany}}
+%\date{\vspace*{-1cm}\footnotesize{May 31, 2023}}
+\date{\today}
+
+\begin{document}
+
+%%% title slide %%%
+
+\begin{frame}[noframenumbering, plain] % don't count the title page while numbering
+\titlepage
+\end{frame}
+
+%%% slide 1 %%%
+
+\begin{frame}
+	\frametitle{Slide 1} \pause
+	
+\begin{itemize}
+\item First bullet point \pause
+\item Second bullet point \parencite{battig1972, crowder1976, tinkham1993}
+\end{itemize}
+\end{frame}
+
+%%% thank you %%%
+
+\begin{frame} {}
+  \centering \Huge
+  \emph{Thank you!}
+\end{frame}
+
+%%% references %%%
+
+\begin{frame}[allowframebreaks]
+\frametitle{References}
+\tiny{\printbibliography}
+\end{frame}
+
+\end{document}
