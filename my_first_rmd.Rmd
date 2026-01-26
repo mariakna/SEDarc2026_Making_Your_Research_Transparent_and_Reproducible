@@ -1,9 +1,12 @@
 ---
 title: "My analysis"
 author: "FirstName LastName"
-date: "\today"
+date: "`r Sys.Date()`"
 output:
   word_document:
+    toc: yes
+    toc_depth: '5'
+  pdf_document:
     toc: yes
     toc_depth: '5'
   html_document:
@@ -13,9 +16,6 @@ output:
       collapsed: yes
       smooth_scroll: yes
     theme: spacelab
-  pdf_document:
-    toc: yes
-    toc_depth: '5'
 fontsize: 16pt
 editor_options:
   chunk_output_type: console
