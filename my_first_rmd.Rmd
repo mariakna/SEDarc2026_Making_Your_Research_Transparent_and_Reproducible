@@ -3,10 +3,10 @@ title: "My analysis"
 author: "FirstName LastName"
 date: "`r Sys.Date()`"
 output:
-  word_document:
+  pdf_document:
     toc: yes
     toc_depth: '5'
-  pdf_document:
+  word_document:
     toc: yes
     toc_depth: '5'
   html_document:
